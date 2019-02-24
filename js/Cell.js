@@ -4,6 +4,7 @@ function Cell(x, y) {
     this.alive = false;
     this.next = false;
     this.prev = false;
+    this.needRedraw = false; //to fix bug with 'dead but alive' cell
 }
 
 Cell.prototype.draw = function (ctx, cellSize) {

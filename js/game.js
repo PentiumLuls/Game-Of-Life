@@ -85,6 +85,10 @@ function draw() {
         for (var y = 0; y < size.rows; y++) {
             if (grid[x][y].alive !== grid[x][y].prev || generation === 1)
                 grid[x][y].draw(ctx, cellSize);
+            else if (grid[x][y].needRedraw) {
+                grid[x][y].draw(ctx, cellSize);
+                grid[x][y].needRedraw = false;
+            }
         }
     }
     const generationCounterCanvas = document.getElementById('generationCounter');
@@ -111,9 +115,11 @@ function handleCanvasClick(event) {
     if (btnCode === 0) {
         //LEFT CLICK
         grid[cellX][cellY].alive = true;
+        grid[cellX][cellY].needRedraw = true;
     } else if (btnCode === 2) {
         //RIGHT CLICK
         grid[cellX][cellY].alive = false;
+        grid[cellX][cellY].needRedraw = true;
     }
 }
 
