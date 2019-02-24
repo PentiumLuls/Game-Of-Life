@@ -22,6 +22,28 @@ function run() {
     window.addEventListener("keyup", keyup, false);
     //window.requestAnimationFrame(gameLoop);
     setInterval(gameLoop, 1000 / fps);
+
+    document.getElementById('board-width-input').oninput = function () {
+        if (this.value > 500) {
+            this.value = 500;
+        } else if (this.value < 1) {
+            this.value = 1;
+        }
+    }
+    document.getElementById('board-height-input').oninput = function () {
+        if (this.value > 500) {
+            this.value = 500;
+        } else if (this.value < 1) {
+            this.value = 1;
+        }
+    }
+    document.getElementById('board-cell-size-input').oninput = function () {
+        if (this.value > 100) {
+            this.value = 100;
+        } else if (this.value < 5) {
+            this.value = 5;
+        }
+    }
 }
 
 function gameLoop() {
