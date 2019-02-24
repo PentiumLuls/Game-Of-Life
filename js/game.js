@@ -1,4 +1,4 @@
-const cellSize = 40;
+let cellSize = 20;
 let canvasWidth;
 let canvasHeight;
 let size;
@@ -6,8 +6,8 @@ let isGameOver;
 let grid;
 let generation;
 let fps = 10;
-let boardWidth = 20;
-let boardHeight = 15;
+let boardWidth = 40;
+let boardHeight = 30;
 const keyMap = {
     32: 'space'
 };
@@ -16,7 +16,7 @@ const pressedKeys = {
 };
 
 function run() {
-    setup();
+    setup(boardWidth, boardHeight, cellSize);
     const canvas = document.getElementById('canvas');
     canvas.addEventListener("mouseup", handleCanvasClick, false);
     window.addEventListener("keyup", keyup, false);
@@ -31,7 +31,11 @@ function gameLoop() {
     //window.requestAnimationFrame(gameLoop);
 }
 
-function setup() {
+function setup(width, height, newCellSize) {
+    cellSize = newCellSize;
+    boardWidth = width;
+    boardHeight = height;
+
     const canvas = document.getElementById('canvas');
     canvasWidth = cellSize * boardWidth;
     canvasHeight = cellSize * boardHeight;
@@ -114,13 +118,22 @@ function handleCanvasClick(event) {
 
     if (btnCode === 0) {
         //LEFT CLICK
-        grid[cellX][cellY].alive = true;
+        grid[cellX][cellY].alive = !grid[cellX][cellY].alive;
         grid[cellX][cellY].needRedraw = true;
     } else if (btnCode === 2) {
         //RIGHT CLICK
-        grid[cellX][cellY].alive = false;
+        //PLACE DIFFERENT STRUCTURE
+
         grid[cellX][cellY].needRedraw = true;
     }
+}
+
+function resizeBoard() {
+    const width = document.getElementById('board-width-input').value;
+    const height = document.getElementById('board-height-input').value;
+    const newCellSize = document.getElementById('board-cell-size-input').value;
+
+    setup(width, height, newCellSize);
 }
 
 function countAliveNeighbors(x, y) {

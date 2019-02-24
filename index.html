@@ -6,6 +6,23 @@
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
+<div id="settingsContainer">
+    <div id="board-size-settings">
+        <label id="board-width">
+            Board width
+            <input type="text" size="3" value="40" id="board-width-input">
+        </label>
+        <label id="board-height">
+            Board height
+            <input type="text" size="3" value="30" id="board-height-input">
+        </label>
+        <label id="board-cell-size">
+            Cell size
+            <input type="text" size="3" value="20" id="board-cell-size-input">
+        </label>
+        <button id="board-resize" onclick="resizeBoard()">Change</button>
+    </div>
+</div>
 <div id="gameBoard">
     <canvas width="400" height="400" id='canvas' oncontextmenu="event.preventDefault();"></canvas>
     <canvas width="100" height="50" id='generationCounter' oncontextmenu="event.preventDefault();"></canvas>

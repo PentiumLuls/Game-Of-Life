@@ -2,6 +2,10 @@
     position: relative;
 }
 
+label {
+    display: block;
+}
+
 canvas {
     position: absolute;
 }
