@@ -2,6 +2,7 @@ function Cell(x, y) {
     this.x = x;
     this.y = y;
     this.alive = false;
+    this.next = false;
 }
 
 Cell.prototype.draw = function (ctx, cellSize) {
