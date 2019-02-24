@@ -8,6 +8,7 @@ let generation;
 let fps = 10;
 let boardWidth = 40;
 let boardHeight = 30;
+let loop;
 const keyMap = {
     32: 'space'
 };
@@ -20,8 +21,7 @@ function run() {
     const canvas = document.getElementById('canvas');
     canvas.addEventListener("mouseup", handleCanvasClick, false);
     window.addEventListener("keyup", keyup, false);
-    //window.requestAnimationFrame(gameLoop);
-    setInterval(gameLoop, 1000 / fps);
+    loop = setInterval(gameLoop, 1000 / fps);
 
     document.getElementById('board-width-input').oninput = function () {
         if (this.value > 500) {
@@ -29,28 +29,34 @@ function run() {
         } else if (this.value < 1) {
             this.value = 1;
         }
-    }
+    };
     document.getElementById('board-height-input').oninput = function () {
         if (this.value > 500) {
             this.value = 500;
         } else if (this.value < 1) {
             this.value = 1;
         }
-    }
+    };
     document.getElementById('board-cell-size-input').oninput = function () {
         if (this.value > 100) {
             this.value = 100;
         } else if (this.value < 5) {
             this.value = 5;
         }
-    }
+    };
+    document.getElementById('speed-input').oninput = function () {
+        if (this.value > 100) {
+            this.value = 100;
+        } else if (this.value < 1) {
+            this.value = 1;
+        }
+    };
 }
 
 function gameLoop() {
     draw();
     if (pressedKeys.space === false)
         update();
-    //window.requestAnimationFrame(gameLoop);
 }
 
 function setup(width, height, newCellSize) {
@@ -106,7 +112,7 @@ function update() {
 
 function draw() {
     const canvas = document.getElementById('canvas');
-    var ctx = canvas.getContext("2d", { alpha: false });
+    var ctx = canvas.getContext("2d", {alpha: false});
     for (var x = 0; x < size.cols; x++) {
         for (var y = 0; y < size.rows; y++) {
             if (grid[x][y].alive !== grid[x][y].prev || generation === 1)
@@ -150,12 +156,17 @@ function handleCanvasClick(event) {
     }
 }
 
-function resizeBoard() {
+function applySettings() {
     const width = document.getElementById('board-width-input').value;
     const height = document.getElementById('board-height-input').value;
     const newCellSize = document.getElementById('board-cell-size-input').value;
+    fps = document.getElementById('speed-input').value;
 
-    setup(width, height, newCellSize);
+    if (!(width === boardWidth && height === boardHeight && newCellSize === cellSize)) {
+        setup(width, height, newCellSize);
+    }
+    clearInterval(loop);
+    loop = setInterval(gameLoop, 1000 / fps);
 }
 
 function countAliveNeighbors(x, y) {

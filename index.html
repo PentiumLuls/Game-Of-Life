@@ -6,21 +6,27 @@
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
-<div id="settingsContainer">
-    <div id="board-size-settings">
-        <label id="board-width">
+<div class="settingsContainer">
+    <div class="board-size-settings">
+        <label>
             Board width
             <input type="text" size="3" value="40" id="board-width-input">
         </label>
-        <label id="board-height">
+        <label>
             Board height
             <input type="text" size="3" value="30" id="board-height-input">
         </label>
-        <label id="board-cell-size">
+        <label>
             Cell size
             <input type="text" size="3" value="20" id="board-cell-size-input">
         </label>
-        <button id="board-resize" onclick="resizeBoard()">Change</button>
+        <button id="board-resize" onclick="applySettings()">Save this settings</button>
+    </div>
+    <div class="other-settings">
+        <label>
+            Speed
+            <input type="text" size="3" value="10" id="speed-input">
+        </label>
     </div>
 </div>
 <div id="gameBoard">

@@ -2,7 +2,16 @@
     position: relative;
 }
 
-label {
+.settingsContainer {
+    display: flex;
+}
+
+.board-size-settings {
+    width: 150px;
+    display: block;
+}
+
+.other-settings {
     display: block;
 }
 
