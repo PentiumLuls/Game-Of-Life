@@ -1,0 +1,15 @@
+#gameBoard {
+    position: relative;
+}
+
+canvas {
+    position: absolute;
+}
+
+#canvas {
+    z-index: 1;
+}
+
+#generationCounter {
+    z-index: 2;
+}

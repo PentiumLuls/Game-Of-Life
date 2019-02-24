@@ -5,32 +5,36 @@ let size;
 let isGameOver;
 let grid;
 let generation;
+let fps = 10;
+let boardWidth = 20;
+let boardHeight = 15;
 const keyMap = {
     32: 'space'
 };
 const pressedKeys = {
     space: false,
-}
+};
 
 function run() {
     setup();
     const canvas = document.getElementById('canvas');
     canvas.addEventListener("mouseup", handleCanvasClick, false);
     window.addEventListener("keyup", keyup, false);
-    window.requestAnimationFrame(gameLoop);
+    //window.requestAnimationFrame(gameLoop);
+    setInterval(gameLoop, 1000 / fps);
 }
 
 function gameLoop() {
     draw();
     if (pressedKeys.space === false)
         update();
-    window.requestAnimationFrame(gameLoop);
+    //window.requestAnimationFrame(gameLoop);
 }
 
 function setup() {
     const canvas = document.getElementById('canvas');
-    canvasWidth = cellSize * 10;
-    canvasHeight = cellSize * 10;
+    canvasWidth = cellSize * boardWidth;
+    canvasHeight = cellSize * boardHeight;
     size = {cols: canvasWidth / cellSize, rows: canvasHeight / cellSize};
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
@@ -67,6 +71,7 @@ function update() {
 
     for (var x = 0; x < size.cols; x++) {
         for (var y = 0; y < size.rows; y++) {
+            grid[x][y].prev = grid[x][y].alive;
             grid[x][y].alive = grid[x][y].next;
         }
     }
@@ -75,16 +80,19 @@ function update() {
 
 function draw() {
     const canvas = document.getElementById('canvas');
-    var ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+    var ctx = canvas.getContext("2d", { alpha: false });
     for (var x = 0; x < size.cols; x++) {
         for (var y = 0; y < size.rows; y++) {
-            grid[x][y].draw(ctx, cellSize);
+            if (grid[x][y].alive !== grid[x][y].prev || generation === 1)
+                grid[x][y].draw(ctx, cellSize);
         }
     }
-    ctx.font = "24px Georgia";
-    ctx.fillStyle = 'red';
-    ctx.fillText(generation, 30, 30);
+    const generationCounterCanvas = document.getElementById('generationCounter');
+    var ctx2 = generationCounterCanvas.getContext("2d");
+    ctx2.clearRect(0, 0, 100, 50);
+    ctx2.font = "24px Georgia";
+    ctx2.fillStyle = 'red';
+    ctx2.fillText(generation, 10, 30);
 }
 
 function keyup(event) {

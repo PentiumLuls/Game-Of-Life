@@ -3,6 +3,7 @@ function Cell(x, y) {
     this.y = y;
     this.alive = false;
     this.next = false;
+    this.prev = false;
 }
 
 Cell.prototype.draw = function (ctx, cellSize) {
