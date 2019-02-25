@@ -7,6 +7,7 @@ function make2DArray(cols, rows) {
 }
 
 let grid;
+let prev;
 let cols;
 let rows;
 let resolution = 20;
@@ -16,7 +17,8 @@ let boardHeight = 30;
 let generation;
 let isPaused = false;
 let isGridDisplayed = true;
-let needUpdateOneTime = false; //TO HANDLE STEPPING OVER ONE GENERATION
+let isNeedUpdateOneTime = false; //TO HANDLE STEPPING OVER ONE GENERATION
+let isNeedRedraw = false;
 
 function setup() {
     createCanvas(boardWidth * resolution, boardHeight * resolution);
@@ -25,36 +27,40 @@ function setup() {
     generation = 1;
     changeGenerationCounter();
 
+    prev = make2DArray(cols, rows);
     grid = make2DArray(cols, rows);
     generateRandomBoard();
 }
 
 function draw() {
-    background(0);
     for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
             let x = i * resolution;
             let y = j * resolution;
 
-            stroke('#191919');
-            if (isGridDisplayed)
-                strokeWeight(1);
-            else
-                noStroke();
-            if (grid[i][j] == 1) {
-                fill('#ffe300');
-                rect(x, y, resolution, resolution);
-            } else {
-                fill('#626262');
-                rect(x, y, resolution, resolution);
+            if (prev[i][j] !== grid[i][j] || generation === 1 || isNeedRedraw) {
+                stroke('#191919');
+                if (isGridDisplayed)
+                    strokeWeight(1);
+                else
+                    noStroke();
+                if (grid[i][j] == 1) {
+                    fill('#ffe300');
+                    rect(x, y, resolution, resolution);
+                } else {
+                    fill('#626262');
+                    rect(x, y, resolution, resolution);
+                }
             }
         }
     }
+    if (isNeedRedraw)
+        isNeedRedraw = false;
 
     if (!isPaused) {
         upgrade();
-    } else if (needUpdateOneTime) {
-        needUpdateOneTime = false;
+    } else if (isNeedUpdateOneTime) {
+        isNeedUpdateOneTime = false;
         upgrade();
     }
 }
@@ -78,6 +84,7 @@ function upgrade() {
             }
         }
     }
+    prev = grid;
     grid = next;
     generation++;
     changeGenerationCounter();
@@ -121,11 +128,12 @@ function keyPressed() {
         isPaused = !isPaused;
     }
     if (key === 'D') {
-        needUpdateOneTime = true;
+        isNeedUpdateOneTime = true;
     }
 }
 
 function toggleGridDisplaying() {
+    isNeedRedraw = true;
     isGridDisplayed = !isGridDisplayed;
 }
 
