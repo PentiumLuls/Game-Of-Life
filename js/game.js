@@ -12,6 +12,7 @@ let rows;
 let resolution = 20;
 let boardWidth = 40;
 let boardHeight = 30;
+let isPaused = false;
 
 function setup() {
     createCanvas(boardWidth * resolution, boardHeight * resolution);
@@ -19,11 +20,7 @@ function setup() {
     rows = height / resolution;
 
     grid = make2DArray(cols, rows);
-    for (let i = 0; i < cols; i++) {
-        for (let j = 0; j < rows; j++) {
-            grid[i][j] = floor(random(2));
-        }
-    }
+    generateRandomBoard();
 }
 
 function draw() {
@@ -44,6 +41,12 @@ function draw() {
         }
     }
 
+    if (!isPaused) {
+        upgrade();
+    }
+}
+
+function upgrade() {
     let next = make2DArray(cols, rows);
     // Compute next based on grid
     for (let i = 0; i < cols; i++) {
@@ -86,6 +89,24 @@ function clearBoard() {
     }
 }
 
+function mousePressed() {
+    const x = mouseX;
+    const y = mouseY;
+    const cellX = Math.floor(x / resolution);
+    const cellY = Math.floor(y / resolution);
+    if (grid[cellX][cellY] === 1) {
+        grid[cellX][cellY] = 0;
+    } else {
+        grid[cellX][cellY] = 1;
+    }
+}
+
+function keyPressed() {
+    if (key === ' ') {
+        isPaused = !isPaused;
+    }
+}
+
 function applySettings() {
     const newWidth = document.getElementById('board-width-input').value;
     const newHeight = document.getElementById('board-height-input').value;
@@ -99,6 +120,14 @@ function applySettings() {
     }
 }
 
+function generateRandomBoard() {
+    for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < rows; j++) {
+            grid[i][j] = floor(random(2));
+        }
+    }
+}
+
 function handleStructureSelector() {
     clearBoard();
     let x = Math.floor(cols / 2);
@@ -106,6 +135,10 @@ function handleStructureSelector() {
     switch (document.getElementById('structure-selector').value) {
         case 'clear': {
             clearBoard();
+            break;
+        }
+        case 'random': {
+            generateRandomBoard();
             break;
         }
         case 'glider': {
