@@ -14,6 +14,7 @@ let boardWidth = 40;
 let boardHeight = 30;
 let isPaused = false;
 let isGridDisplayed = true;
+let needUpdateOneTime = false; //TO HANDLE STEPPING OVER ONE GENERATION
 
 function setup() {
     createCanvas(boardWidth * resolution, boardHeight * resolution);
@@ -47,6 +48,9 @@ function draw() {
     }
 
     if (!isPaused) {
+        upgrade();
+    } else if (needUpdateOneTime) {
+        needUpdateOneTime = false;
         upgrade();
     }
 }
@@ -110,6 +114,9 @@ function keyPressed() {
     if (key === ' ') {
         isPaused = !isPaused;
     }
+    if (key === 'D') {
+        needUpdateOneTime = true;
+    }
 }
 
 function toggleGridDisplaying() {
@@ -137,10 +144,16 @@ function generateRandomBoard() {
     }
 }
 
-function handleStructureSelector() {
-    clearBoard();
+function applyStructureToBoard(structure, xOffset, yOffset) {
     let x = Math.floor(cols / 2);
     let y = Math.floor(rows / 2);
+    for (let i = 0; i < structure.length; i++) {
+        grid[x - xOffset + structure[i][0]][y - yOffset + structure[i][1]] = 1;
+    }
+}
+
+function handleStructureSelector() {
+    clearBoard();
     switch (document.getElementById('structure-selector').value) {
         case 'clear': {
             clearBoard();
@@ -151,149 +164,35 @@ function handleStructureSelector() {
             break;
         }
         case 'glider': {
-            x -= 2;
-            y -= 2;
-            grid[x][y + 1] = 1;
-            grid[x + 1][y + 2] = 1;
-            grid[x + 2][y + 2] = 1;
-            grid[x + 2][y + 1] = 1;
-            grid[x + 2][y] = 1;
+            applyStructureToBoard(glider, 2, 2);
             break;
         }
         case 'small exploder': {
-            x -= 2;
-            y -= 2;
-            grid[x + 1][y] = 1;
-            grid[x][y + 1] = 1;
-            grid[x + 1][y + 1] = 1;
-            grid[x + 2][y + 1] = 1;
-            grid[x][y + 2] = 1;
-            grid[x + 2][y + 2] = 1;
-            grid[x + 1][y + 3] = 1;
+            applyStructureToBoard(smallExploder, 2, 2);
             break;
         }
         case 'exploder': {
-            x -= 5;
-            y -= 5;
-            grid[x][y] = 1;
-            grid[x + 2][y] = 1;
-            grid[x + 4][y] = 1;
-            grid[x][y + 1] = 1;
-            grid[x + 4][y + 1] = 1;
-            grid[x][y + 2] = 1;
-            grid[x + 4][y + 2] = 1;
-            grid[x][y + 3] = 1;
-            grid[x + 4][y + 3] = 1;
-            grid[x][y + 4] = 1;
-            grid[x + 2][y + 4] = 1;
-            grid[x + 4][y + 4] = 1;
+            applyStructureToBoard(exploder, 5, 5);
             break;
         }
         case '10 cell row': {
-            x -= 5;
-            grid[x][y] = 1;
-            grid[x + 1][y] = 1;
-            grid[x + 2][y] = 1;
-            grid[x + 3][y] = 1;
-            grid[x + 4][y] = 1;
-            grid[x + 5][y] = 1;
-            grid[x + 6][y] = 1;
-            grid[x + 7][y] = 1;
-            grid[x + 8][y] = 1;
-            grid[x + 9][y] = 1;
+            applyStructureToBoard(tenCellRow, 5, 0);
             break;
         }
         case 'lightweight spaceship': {
-            x -= 3;
-            y -= 3;
-            grid[x + 1][y] = 1;
-            grid[x + 2][y] = 1;
-            grid[x + 3][y] = 1;
-            grid[x + 4][y] = 1;
-            grid[x][y + 1] = 1;
-            grid[x + 4][y + 1] = 1;
-            grid[x + 4][y + 2] = 1;
-            grid[x][y + 3] = 1;
-            grid[x + 3][y + 3] = 1;
+            applyStructureToBoard(lightweightSpaceship, 3, 3);
             break;
         }
         case 'tumbler': {
-            x -= 6;
-            y -= 6;
-            grid[x + 1][y] = 1;
-            grid[x + 2][y] = 1;
-            grid[x + 4][y] = 1;
-            grid[x + 5][y] = 1;
-
-            grid[x + 1][y + 1] = 1;
-            grid[x + 2][y + 1] = 1;
-            grid[x + 4][y + 1] = 1;
-            grid[x + 5][y + 1] = 1;
-
-            grid[x + 2][y + 2] = 1;
-            grid[x + 4][y + 2] = 1;
-
-            grid[x][y + 3] = 1;
-            grid[x + 2][y + 3] = 1;
-            grid[x + 4][y + 3] = 1;
-            grid[x + 6][y + 3] = 1;
-
-            grid[x][y + 4] = 1;
-            grid[x + 2][y + 4] = 1;
-            grid[x + 4][y + 4] = 1;
-            grid[x + 6][y + 4] = 1;
-
-            grid[x][y + 5] = 1;
-            grid[x + 1][y + 5] = 1;
-            grid[x + 5][y + 5] = 1;
-            grid[x + 6][y + 5] = 1;
+            applyStructureToBoard(tumbler, 6, 6);
             break;
         }
-
         case 'gosper glider gun': {
-            x -= 19;
-            y -= 10;
-            grid[x][y + 2] = 1;
-            grid[x + 1][y + 2] = 1;
-            grid[x][y + 3] = 1;
-            grid[x + 1][y + 3] = 1;
-
-            grid[x + 8][y + 3] = 1;
-            grid[x + 8][y + 4] = 1;
-            grid[x + 9][y + 2] = 1;
-            grid[x + 9][y + 4] = 1;
-            grid[x + 10][y + 2] = 1;
-            grid[x + 10][y + 3] = 1;
-
-            grid[x + 16][y + 4] = 1;
-            grid[x + 16][y + 5] = 1;
-            grid[x + 16][y + 6] = 1;
-            grid[x + 17][y + 4] = 1;
-            grid[x + 18][y + 5] = 1;
-
-            grid[x + 22][y + 1] = 1;
-            grid[x + 22][y + 2] = 1;
-            grid[x + 23][y] = 1;
-            grid[x + 23][y + 2] = 1;
-            grid[x + 24][y] = 1;
-            grid[x + 24][y + 1] = 1;
-
-            grid[x + 24][y + 12] = 1;
-            grid[x + 24][y + 13] = 1;
-            grid[x + 25][y + 12] = 1;
-            grid[x + 25][y + 14] = 1;
-            grid[x + 26][y + 12] = 1;
-
-            grid[x + 34][y] = 1;
-            grid[x + 34][y + 1] = 1;
-            grid[x + 35][y] = 1;
-            grid[x + 35][y + 1] = 1;
-
-            grid[x + 35][y + 7] = 1;
-            grid[x + 35][y + 8] = 1;
-            grid[x + 35][y + 9] = 1;
-            grid[x + 36][y + 7] = 1;
-            grid[x + 37][y + 8] = 1;
+            applyStructureToBoard(gosperGliderGun, 19, 10);
+            break;
+        }
+        case 'flower': {
+            applyStructureToBoard(flower, 10, 10);
             break;
         }
     }
