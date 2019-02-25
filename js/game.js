@@ -12,6 +12,8 @@ let rows;
 let resolution = 20;
 let boardWidth = 40;
 let boardHeight = 30;
+
+let generation;
 let isPaused = false;
 let isGridDisplayed = true;
 let needUpdateOneTime = false; //TO HANDLE STEPPING OVER ONE GENERATION
@@ -20,6 +22,8 @@ function setup() {
     createCanvas(boardWidth * resolution, boardHeight * resolution);
     cols = width / resolution;
     rows = height / resolution;
+    generation = 1;
+    changeGenerationCounter();
 
     grid = make2DArray(cols, rows);
     generateRandomBoard();
@@ -75,6 +79,8 @@ function upgrade() {
         }
     }
     grid = next;
+    generation++;
+    changeGenerationCounter();
 }
 
 function countNeighbors(grid, x, y) {
@@ -152,8 +158,14 @@ function applyStructureToBoard(structure, xOffset, yOffset) {
     }
 }
 
+function changeGenerationCounter() {
+    document.getElementById('generationCounter').innerHTML = 'Generation: ' + generation;
+}
+
 function handleStructureSelector() {
     clearBoard();
+    generation = 1;
+    changeGenerationCounter();
     switch (document.getElementById('structure-selector').value) {
         case 'clear': {
             clearBoard();
