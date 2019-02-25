@@ -33,8 +33,12 @@ function draw() {
             let x = i * resolution;
             let y = j * resolution;
             if (grid[i][j] == 1) {
-                fill(255);
+                fill('#ffe300');
                 stroke(0);
+                rect(x, y, resolution - 1, resolution - 1);
+            } else {
+                fill('#626262');
+                stroke(2);
                 rect(x, y, resolution - 1, resolution - 1);
             }
         }
