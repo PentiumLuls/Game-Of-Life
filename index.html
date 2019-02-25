@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.dom.js"></script>
 <div class="settingsContainer">
     <div class="board-size-settings">
         <label>
@@ -25,7 +27,7 @@
     <div class="other-settings">
         <label>
             Speed
-            <input type="text" size="3" value="10" id="speed-input">
+            <input type="text" size="3" value="NOT WORKING" id="speed-input">
         </label>
         <label for="structure-selector">template</label>
         <select id="structure-selector" onchange="handleStructureSelector()">
@@ -45,7 +47,6 @@
     <canvas width="100" height="50" id='generationCounter' oncontextmenu="event.preventDefault();"></canvas>
 </div>
 
-<script src="js/Cell.js"></script>
 <script src="js/game.js"></script>
 </body>
 </html>
