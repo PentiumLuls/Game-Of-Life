@@ -13,6 +13,7 @@ let resolution = 20;
 let boardWidth = 40;
 let boardHeight = 30;
 let isPaused = false;
+let isGridDisplayed = true;
 
 function setup() {
     createCanvas(boardWidth * resolution, boardHeight * resolution);
@@ -29,14 +30,18 @@ function draw() {
         for (let j = 0; j < rows; j++) {
             let x = i * resolution;
             let y = j * resolution;
+
+            stroke('#191919');
+            if (isGridDisplayed)
+                strokeWeight(1);
+            else
+                noStroke();
             if (grid[i][j] == 1) {
                 fill('#ffe300');
-                stroke(0);
-                rect(x, y, resolution - 1, resolution - 1);
+                rect(x, y, resolution, resolution);
             } else {
                 fill('#626262');
-                stroke(2);
-                rect(x, y, resolution - 1, resolution - 1);
+                rect(x, y, resolution, resolution);
             }
         }
     }
@@ -105,6 +110,10 @@ function keyPressed() {
     if (key === ' ') {
         isPaused = !isPaused;
     }
+}
+
+function toggleGridDisplaying() {
+    isGridDisplayed = !isGridDisplayed;
 }
 
 function applySettings() {

@@ -25,10 +25,18 @@
         <button id="board-resize" onclick="applySettings()">Save this settings</button>
     </div>
     <div class="other-settings">
-        <label>
-            Speed
-            <input type="text" size="3" value="NOT WORKING" id="speed-input">
-        </label>
+        <div>
+            <label>
+                Speed
+                <input type="text" size="3" value="NOT WORKING" id="speed-input">
+            </label>
+        </div>
+        <div>
+            <label>
+                Show grid
+                <input type="checkbox" name="grid" onclick='toggleGridDisplaying();' checked>
+            </label>
+        </div>
         <label for="structure-selector">template</label>
         <select id="structure-selector" onchange="handleStructureSelector()">
             <option value="clear">Clear</option>
@@ -41,6 +49,9 @@
             <option value="tumbler">Tumbler</option>
             <option value="gosper glider gun">Gosper glider gun</option>
         </select>
+    </div>
+    <div class="help-block">
+        <p>Use 'space' to pause simulation</p>
     </div>
 </div>
 <div id="gameBoard">
