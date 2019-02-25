@@ -78,7 +78,6 @@ function setup(width, height, newCellSize) {
             grid[x][y] = new Cell(x * cellSize, y * cellSize);
         }
     }
-    initializeFirstBoardState();
 }
 
 function update() {
@@ -169,6 +168,16 @@ function applySettings() {
     loop = setInterval(gameLoop, 1000 / fps);
 }
 
+function clearBoard() {
+    for (var x = 0; x < size.cols; x++) {
+        for (var y = 0; y < size.rows; y++) {
+            grid[x][y].alive = false;
+            grid[x][y].next = false;
+            grid[x][y].needRedraw = true;
+        }
+    }
+}
+
 function countAliveNeighbors(x, y) {
     var result = 0;
     for (var i = -1; i <= 1; i++) {
@@ -185,21 +194,169 @@ function countAliveNeighbors(x, y) {
     return result;
 }
 
-function initializeFirstBoardState() {
-    //GLIDER
-    grid[1][2].alive = true;
-    grid[2][3].alive = true;
-    grid[3][3].alive = true;
-    grid[3][2].alive = true;
-    grid[3][1].alive = true;
-}
-
 function create2DArray(size) {
     const grid = new Array(size.cols);
     for (var x = 0; x < size.cols; x++) {
         grid[x] = new Array(size.rows);
     }
     return grid;
+}
+
+function handleStructureSelector() {
+    clearBoard();
+    let x = Math.floor(boardWidth / 2);
+    let y = Math.floor(boardHeight / 2);
+    switch (document.getElementById('structure-selector').value) {
+        case 'clear': {
+            break;
+        }
+        case 'glider': {
+            x -= 2;
+            y -= 2;
+            grid[x][y+1].alive = true;
+            grid[x+1][y+2].alive = true;
+            grid[x+2][y+2].alive = true;
+            grid[x+2][y+1].alive = true;
+            grid[x+2][y].alive = true;
+            break;
+        }
+        case 'small exploder': {
+            x -= 2;
+            y -= 2;
+            grid[x+1][y].alive = true;
+            grid[x][y+1].alive = true;
+            grid[x+1][y+1].alive = true;
+            grid[x+2][y+1].alive = true;
+            grid[x][y+2].alive = true;
+            grid[x+2][y+2].alive = true;
+            grid[x+1][y+3].alive = true;
+            break;
+        }
+        case 'exploder': {
+            x -= 5;
+            y -= 5;
+            grid[x][y].alive = true;
+            grid[x+2][y].alive = true;
+            grid[x+4][y].alive = true;
+            grid[x][y+1].alive = true;
+            grid[x+4][y+1].alive = true;
+            grid[x][y+2].alive = true;
+            grid[x+4][y+2].alive = true;
+            grid[x][y+3].alive = true;
+            grid[x+4][y+3].alive = true;
+            grid[x][y+4].alive = true;
+            grid[x+2][y+4].alive = true;
+            grid[x+4][y+4].alive = true;
+            break;
+        }
+        case '10 cell row': {
+            x -= 5;
+            grid[x][y].alive = true;
+            grid[x+1][y].alive = true;
+            grid[x+2][y].alive = true;
+            grid[x+3][y].alive = true;
+            grid[x+4][y].alive = true;
+            grid[x+5][y].alive = true;
+            grid[x+6][y].alive = true;
+            grid[x+7][y].alive = true;
+            grid[x+8][y].alive = true;
+            grid[x+9][y].alive = true;
+            break;
+        }
+        case 'lightweight spaceship': {
+            x -= 3;
+            y -= 3;
+            grid[x+1][y].alive = true;
+            grid[x+2][y].alive = true;
+            grid[x+3][y].alive = true;
+            grid[x+4][y].alive = true;
+            grid[x][y+1].alive = true;
+            grid[x+4][y+1].alive = true;
+            grid[x+4][y+2].alive = true;
+            grid[x][y+3].alive = true;
+            grid[x+3][y+3].alive = true;
+            break;
+        }
+        case 'tumbler': {
+            x -= 6;
+            y -= 6;
+            grid[x+1][y].alive = true;
+            grid[x+2][y].alive = true;
+            grid[x+4][y].alive = true;
+            grid[x+5][y].alive = true;
+
+            grid[x+1][y+1].alive = true;
+            grid[x+2][y+1].alive = true;
+            grid[x+4][y+1].alive = true;
+            grid[x+5][y+1].alive = true;
+
+            grid[x+2][y+2].alive = true;
+            grid[x+4][y+2].alive = true;
+
+            grid[x][y+3].alive = true;
+            grid[x+2][y+3].alive = true;
+            grid[x+4][y+3].alive = true;
+            grid[x+6][y+3].alive = true;
+
+            grid[x][y+4].alive = true;
+            grid[x+2][y+4].alive = true;
+            grid[x+4][y+4].alive = true;
+            grid[x+6][y+4].alive = true;
+
+            grid[x][y+5].alive = true;
+            grid[x+1][y+5].alive = true;
+            grid[x+5][y+5].alive = true;
+            grid[x+6][y+5].alive = true;
+            break;
+        }
+
+        case 'gosper glider gun': {
+            x -= 19;
+            y -= 10;
+            grid[x][y+2].alive = true;
+            grid[x+1][y+2].alive = true;
+            grid[x][y+3].alive = true;
+            grid[x+1][y+3].alive = true;
+
+            grid[x+8][y+3].alive = true;
+            grid[x+8][y+4].alive = true;
+            grid[x+9][y+2].alive = true;
+            grid[x+9][y+4].alive = true;
+            grid[x+10][y+2].alive = true;
+            grid[x+10][y+3].alive = true;
+
+            grid[x+16][y+4].alive = true;
+            grid[x+16][y+5].alive = true;
+            grid[x+16][y+6].alive = true;
+            grid[x+17][y+4].alive = true;
+            grid[x+18][y+5].alive = true;
+
+            grid[x+22][y+1].alive = true;
+            grid[x+22][y+2].alive = true;
+            grid[x+23][y].alive = true;
+            grid[x+23][y+2].alive = true;
+            grid[x+24][y].alive = true;
+            grid[x+24][y+1].alive = true;
+
+            grid[x+24][y+12].alive = true;
+            grid[x+24][y+13].alive = true;
+            grid[x+25][y+12].alive = true;
+            grid[x+25][y+14].alive = true;
+            grid[x+26][y+12].alive = true;
+
+            grid[x+34][y].alive = true;
+            grid[x+34][y+1].alive = true;
+            grid[x+35][y].alive = true;
+            grid[x+35][y+1].alive = true;
+
+            grid[x+35][y+7].alive = true;
+            grid[x+35][y+8].alive = true;
+            grid[x+35][y+9].alive = true;
+            grid[x+36][y+7].alive = true;
+            grid[x+37][y+8].alive = true;
+            break;
+        }
+    }
 }
 
 run();

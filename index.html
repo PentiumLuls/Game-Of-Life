@@ -27,6 +27,17 @@
             Speed
             <input type="text" size="3" value="10" id="speed-input">
         </label>
+        <label for="structure-selector">template</label>
+        <select id="structure-selector" onchange="handleStructureSelector()">
+            <option selected value="clear">Clear</option>
+            <option value="glider">Glider</option>
+            <option value="small exploder">Small exploder</option>
+            <option value="exploder">Exploder</option>
+            <option value="10 cell row">10 Cell row</option>
+            <option value="lightweight spaceship">Lightweight spaceship</option>
+            <option value="tumbler">Tumbler</option>
+            <option value="gosper glider gun">Gosper glider gun</option>
+        </select>
     </div>
 </div>
 <div id="gameBoard">
