@@ -12,15 +12,15 @@
     <div class="board-size-settings">
         <label>
             Board width
-            <input type="text" size="3" value="40" id="board-width-input">
+            <input type="text" size="3" value="100" id="board-width-input">
         </label>
         <label>
             Board height
-            <input type="text" size="3" value="30" id="board-height-input">
+            <input type="text" size="3" value="100" id="board-height-input">
         </label>
         <label>
             Cell size
-            <input type="text" size="3" value="20" id="board-cell-size-input">
+            <input type="text" size="3" value="5" id="board-cell-size-input">
         </label>
         <button id="board-resize" onclick="applySettings()">Save this settings</button>
     </div>
@@ -34,13 +34,13 @@
         <div>
             <label>
                 Show grid
-                <input type="checkbox" name="grid" onclick='toggleGridDisplaying();' checked>
+                <input type="checkbox" name="grid" id="is-grid-displayed" onclick='toggleGridDisplaying();'>
             </label>
         </div>
         <label for="structure-selector">template</label>
         <select id="structure-selector" onchange="handleStructureSelector()">
             <option value="clear">Clear</option>
-            <option selected value="random">Random</option>
+            <option value="random">Random</option>
             <option value="glider">Glider</option>
             <option value="small exploder">Small exploder</option>
             <option value="exploder">Exploder</option>
@@ -48,7 +48,7 @@
             <option value="lightweight spaceship">Lightweight spaceship</option>
             <option value="tumbler">Tumbler</option>
             <option value="gosper glider gun">Gosper glider gun</option>
-            <option value="flower">Flower</option>
+            <option selected value="flower">Flower</option>
         </select>
     </div>
     <div class="help-block">

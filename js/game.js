@@ -16,11 +16,15 @@ let boardHeight = 30;
 
 let generation;
 let isPaused = false;
-let isGridDisplayed = true;
+let isGridDisplayed = false;
 let isNeedUpdateOneTime = false; //TO HANDLE STEPPING OVER ONE GENERATION
 let isNeedRedraw = false;
 
 function setup() {
+    boardWidth = document.getElementById('board-width-input').value;
+    boardHeight = document.getElementById('board-height-input').value;
+    resolution = document.getElementById('board-cell-size-input').value;
+    isGridDisplayed = document.getElementById('is-grid-displayed').checked;
     createCanvas(boardWidth * resolution, boardHeight * resolution);
     cols = width / resolution;
     rows = height / resolution;
@@ -29,7 +33,8 @@ function setup() {
 
     prev = make2DArray(cols, rows);
     grid = make2DArray(cols, rows);
-    generateRandomBoard();
+    handleStructureSelector();
+    //generateRandomBoard();
 }
 
 function draw() {
@@ -127,7 +132,7 @@ function keyPressed() {
     if (key === ' ') {
         isPaused = !isPaused;
     }
-    if (key === 'D') {
+    if (key === 'D' || keyCode === RIGHT_ARROW) {
         isNeedUpdateOneTime = true;
     }
 }
@@ -159,6 +164,20 @@ function generateRandomBoard() {
 }
 
 function applyStructureToBoard(structure, xOffset, yOffset) {
+    //TODO GENERATING BY
+    // "......*.....
+    // .....*.*....
+    // ......*.....
+    // ............
+    // ....*****...
+    // ...*..*..*..
+    // ..*.**.**.*.
+    // ..*.*...*.*.
+    // .**.*...*.**
+    // .*..*.*.*..*
+    // ...*.....*..
+    // ....*****...
+    // ......*....."
     let x = Math.floor(cols / 2);
     let y = Math.floor(rows / 2);
     for (let i = 0; i < structure.length; i++) {
