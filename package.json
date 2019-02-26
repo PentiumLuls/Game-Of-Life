@@ -1,0 +1,13 @@
+{
+  "name": "my-game-of-life1",
+  "version": "1.0.0",
+  "description": "some descriptions",
+  "main": "js/game.js",
+  "scripts": {
+    "start": "npm run dev"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}
