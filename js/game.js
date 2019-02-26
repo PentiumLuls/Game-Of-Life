@@ -242,6 +242,10 @@ function handleStructureSelector() {
             applyStructureToBoard(verage, 7, 9);
             break;
         }
+        case 'blinkerShip': {
+            applyStructureToBoard(blinkerShip, 10, 12);
+            break;
+        }
     }
 
 }
