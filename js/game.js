@@ -164,24 +164,28 @@ function generateRandomBoard() {
 }
 
 function applyStructureToBoard(structure, xOffset, yOffset) {
-    //TODO GENERATING BY
-    // "......*.....
-    // .....*.*....
-    // ......*.....
-    // ............
-    // ....*****...
-    // ...*..*..*..
-    // ..*.**.**.*.
-    // ..*.*...*.*.
-    // .**.*...*.**
-    // .*..*.*.*..*
-    // ...*.....*..
-    // ....*****...
-    // ......*....."
     let x = Math.floor(cols / 2);
     let y = Math.floor(rows / 2);
-    for (let i = 0; i < structure.length; i++) {
-        grid[x - xOffset + structure[i][0]][y - yOffset + structure[i][1]] = 1;
+    if (typeof structure == 'string') {
+        var cellX = 0;
+        var cellY = 0;
+        for (let i = 0; i < structure.length; i++) {
+            const cell = structure[i];
+            if (cell === 'E') {
+                cellX = 0;
+                cellY++;
+            } else {
+                cellX++;
+            }
+            if (cell === '*')
+                grid[x - xOffset + cellX][y - yOffset + cellY] = 1;
+            else if (cell === '.')
+                grid[x - xOffset + cellX][y - yOffset + cellY] = 0;
+        }
+    } else {
+        for (let i = 0; i < structure.length; i++) {
+            grid[x - xOffset + structure[i][0]][y - yOffset + structure[i][1]] = 1;
+        }
     }
 }
 
@@ -232,6 +236,10 @@ function handleStructureSelector() {
         }
         case 'flower': {
             applyStructureToBoard(flower, 10, 10);
+            break;
+        }
+        case 'verage': {
+            applyStructureToBoard(verage, 7, 9);
             break;
         }
     }
