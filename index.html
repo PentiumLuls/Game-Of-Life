@@ -36,6 +36,10 @@
                 Show grid
                 <input type="checkbox" name="grid" id="is-grid-displayed" onclick='toggleGridDisplaying();'>
             </label>
+            <label>
+                Wrap sides
+                <input type="checkbox" checked name="wrapSides" id="is-sides-wrapped" onclick='toggleSidesWrapping();'>
+            </label>
         </div>
         <label for="structure-selector">template</label>
         <select id="structure-selector" onchange="handleStructureSelector()" size="0">
@@ -63,7 +67,7 @@
     </div>
     <div class="help-block">
         <p>Use 'space' to pause simulation</p>
-        <p>'D' or right button to step over one generation</p>
+        <p>'D' button to step over one generation</p>
         <p id="generationCounter">0</p>
     </div>
 </div>

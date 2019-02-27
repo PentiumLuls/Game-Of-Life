@@ -17,6 +17,7 @@ let boardHeight = 30;
 let generation;
 let isPaused = false;
 let isGridDisplayed = false;
+let isSidesWrapped = true;
 let isNeedUpdateOneTime = false; //TO HANDLE STEPPING OVER ONE GENERATION
 let isNeedRedraw = false;
 
@@ -99,9 +100,16 @@ function countNeighbors(grid, x, y) {
     let sum = 0;
     for (let i = -1; i < 2; i++) {
         for (let j = -1; j < 2; j++) {
-            let col = (x + i + cols) % cols;
-            let row = (y + j + rows) % rows;
-            sum += grid[col][row];
+            let col, row;
+            if (isSidesWrapped) {
+                col = (x + i + cols) % cols;
+                row = (y + j + rows) % rows;
+            } else {
+                col = x + i;
+                row = y + j;
+            }
+            if (!(col < 0 || row < 0 || col + 1 > cols || row > rows))
+                sum += grid[col][row];
         }
     }
     sum -= grid[x][y];
@@ -132,7 +140,7 @@ function keyPressed() {
     if (key === ' ') {
         isPaused = !isPaused;
     }
-    if (key === 'D' || keyCode === RIGHT_ARROW) {
+    if (key === 'D') {
         isNeedUpdateOneTime = true;
     }
 }
@@ -140,6 +148,10 @@ function keyPressed() {
 function toggleGridDisplaying() {
     isNeedRedraw = true;
     isGridDisplayed = !isGridDisplayed;
+}
+
+function toggleSidesWrapping() {
+    isSidesWrapped = !isSidesWrapped;
 }
 
 function applySettings() {
