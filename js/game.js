@@ -31,11 +31,11 @@ function setup() {
     rows = height / resolution;
     generation = 1;
     changeGenerationCounter();
+    addOptionsToStructureSelector();
 
     prev = make2DArray(cols, rows);
     grid = make2DArray(cols, rows);
     handleStructureSelector();
-    //generateRandomBoard();
 }
 
 function draw() {
@@ -241,72 +241,25 @@ function changeGenerationCounter() {
     document.getElementById('generationCounter').innerHTML = 'Generation: ' + generation;
 }
 
-function handleStructureSelector() {
-    clearBoard();
-    generation = 1;
-    changeGenerationCounter();
-    switch (document.getElementById('structure-selector').value) {
-        case 'clear': {
-            clearBoard();
-            break;
-        }
-        case 'random': {
-            generateRandomBoard();
-            break;
-        }
-        case 'glider': {
-            applyStructureToBoard(glider, 2, 2);
-            break;
-        }
-        case 'small exploder': {
-            applyStructureToBoard(smallExploder, 2, 2);
-            break;
-        }
-        case 'exploder': {
-            applyStructureToBoard(exploder, 5, 5);
-            break;
-        }
-        case '10 cell row': {
-            applyStructureToBoard(tenCellRow, 5, 0);
-            break;
-        }
-        case 'lightweight spaceship': {
-            applyStructureToBoard(lightweightSpaceship, 3, 3);
-            break;
-        }
-        case 'tumbler': {
-            applyStructureToBoard(tumbler, 6, 6);
-            break;
-        }
-        case 'gosper glider gun': {
-            applyStructureToBoard(gosperGliderGun, 19, 10);
-            break;
-        }
-        case 'flower': {
-            applyStructureToBoard(flower, 10, 10);
-            break;
-        }
-        case 'verage': {
-            applyStructureToBoard(verage, 7, 9);
-            break;
-        }
-        case 'blinkerShip': {
-            applyStructureToBoard(blinkerShip, 10, 12);
-            break;
-        }
-        case 'boss': {
-            applyStructureToBoard(boss, 7, 10);
-            break;
-        }
-        case 'bunnies': {
-            applyStructureToBoard(bunnies, 7, 3);
-            break;
-        }
-        case 'wickstretcher': {
-            applyStructureToBoard(wickstretcher, 30, 50);
-            break;
-        }
-
+function addOptionsToStructureSelector() {
+    const select = document.getElementById('structure-selector');
+    if (!localStorage.customTemplates) {
+        localStorage.customTemplates = JSON.stringify([]);
     }
-
+    const custom = JSON.parse(localStorage.customTemplates);
+    for (let i = 0; i < custom.length; i++) {
+        let needAdd = true;
+        for (j = 0; j < select.length; j++) {
+            if (select.options[j].text === custom[i].name) {
+                needAdd = false;
+                break;
+            }
+        }
+        if (needAdd) {
+            var opt = document.createElement('option');
+            opt.value = custom[i].name;
+            opt.innerHTML = custom[i].name;
+            select.appendChild(opt);
+        }
+    }
 }
