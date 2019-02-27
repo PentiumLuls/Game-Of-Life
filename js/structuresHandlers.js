@@ -12,7 +12,13 @@ const structures = [
     {name: "boss", structure: boss, xOffset: 7, yOffset: 10},
     {name: "bunnies", structure: bunnies, xOffset: 7, yOffset: 3},
     {name: "wickstretcher", structure: wickstretcher, xOffset: 30, yOffset: 50},
-    {name: "tagalong", structure: tagalong, xOffset: 30, yOffset: 30},
+    {name: "tagalong", structure: tagalong, xOffset: 15, yOffset: 10},
+    {name: "blinkerPuffer2", structure: blinkerPuffer2, xOffset: 15, yOffset: 10},
+    {name: "frothingPuffer", structure: frothingPuffer, xOffset: 15, yOffset: 10},
+    {name: "biGun", structure: biGun, xOffset: 30, yOffset: 10},
+    {name: "gunstar", structure: gunstar, xOffset: 80, yOffset: 80},
+    {name: "acorn", structure: acorn, xOffset: 4, yOffset: 2},
+    {name: "dieHard", structure: dieHard, xOffset: 16, yOffset: 16},
 ];
 
 function saveCustomTemplate() {
@@ -80,11 +86,74 @@ function handleStructureSelector() {
             return;
         }
     }
+    //APPLY CUSTOM STRUCTURE
     const custom = JSON.parse(localStorage.customTemplates);
     for (let i = 0; i < custom.length; i++) {
         if (custom[i].name === value) {
             applyStructureToBoard(custom[i].str, custom[i].xOffset, custom[i].yOffset);
             break;
+        }
+    }
+}
+
+function applyStructureToBoard(structure, xOffset, yOffset) {
+    let x = Math.floor(cols / 2);
+    let y = Math.floor(rows / 2);
+    //STRING READING
+    if (typeof structure == 'string') {
+        var cellX = 0;
+        var cellY = 0;
+        for (let i = 0; i < structure.length; i++) {
+            const cell = structure[i];
+            if (cell === 'E') {
+                cellX = 0;
+                cellY++;
+            } else {
+                cellX++;
+            }
+            if (cell === '*')
+                grid[x - xOffset + cellX][y - yOffset + cellY] = 1;
+            else if (cell === '.')
+                grid[x - xOffset + cellX][y - yOffset + cellY] = 0;
+        }
+    }
+    //RLE READING
+    else if (typeof structure.rle == 'string') {
+        const columns = structure.rle.split("$");
+        for (var i = 0; i < columns.length; i++) {
+            const column = columns[i];
+            var num = '';
+            var cellY = i;
+            var xcountOffset = 0;
+            for (let j = 0; j < column.length; j++) {
+                const symbol = column[j];
+                try {
+                    if (symbol === 'b') {
+                        if (num === '')
+                            num = '1';
+                        for (let cellX = 0; cellX < num; cellX++) {
+                            grid[x - xOffset + cellX + xcountOffset][y - yOffset + cellY] = 0;
+                        }
+                        xcountOffset += parseInt(num);
+                        num = '';
+                    } else if (symbol === 'o') {
+                        if (num === '')
+                            num = '1';
+                        for (let cellX = 0; cellX < num; cellX++) {
+                            grid[x - xOffset + cellX + xcountOffset][y - yOffset + cellY] = 1;
+                        }
+                        xcountOffset += parseInt(num);
+                        num = '';
+                    } else num += symbol;
+                } catch (e) {
+                }
+            }
+        }
+    }
+    //ARRAY READING
+    else {
+        for (let i = 0; i < structure.length; i++) {
+            grid[x - xOffset + structure[i][0]][y - yOffset + structure[i][1]] = 1;
         }
     }
 }

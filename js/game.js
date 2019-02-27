@@ -175,68 +175,6 @@ function generateRandomBoard() {
     }
 }
 
-function applyStructureToBoard(structure, xOffset, yOffset) {
-    let x = Math.floor(cols / 2);
-    let y = Math.floor(rows / 2);
-    //STRING READING
-    if (typeof structure == 'string') {
-        var cellX = 0;
-        var cellY = 0;
-        for (let i = 0; i < structure.length; i++) {
-            const cell = structure[i];
-            if (cell === 'E') {
-                cellX = 0;
-                cellY++;
-            } else {
-                cellX++;
-            }
-            if (cell === '*')
-                grid[x - xOffset + cellX][y - yOffset + cellY] = 1;
-            else if (cell === '.')
-                grid[x - xOffset + cellX][y - yOffset + cellY] = 0;
-        }
-    }
-    //RLE READING
-    else if (typeof structure.rle == 'string') {
-        const columns = structure.rle.split("$");
-        for (var i = 0; i < columns.length; i++) {
-            const column = columns[i];
-            var num = '';
-            var cellY = i;
-            var xcountOffset = 0;
-            for (let j = 0; j < column.length; j++) {
-                const symbol = column[j];
-                try {
-                    if (symbol === 'b') {
-                        if (num === '')
-                            num = '1';
-                        for (let cellX = 0; cellX < num; cellX++) {
-                            grid[x - xOffset + cellX + xcountOffset][y - yOffset + cellY] = 0;
-                        }
-                        xcountOffset += parseInt(num);
-                        num = '';
-                    } else if (symbol === 'o') {
-                        if (num === '')
-                            num = '1';
-                        for (let cellX = 0; cellX < num; cellX++) {
-                            grid[x - xOffset + cellX + xcountOffset][y - yOffset + cellY] = 1;
-                        }
-                        xcountOffset += parseInt(num);
-                        num = '';
-                    } else num += symbol;
-                } catch (e) {
-                }
-            }
-        }
-    }
-    //ARRAY READING
-    else {
-        for (let i = 0; i < structure.length; i++) {
-            grid[x - xOffset + structure[i][0]][y - yOffset + structure[i][1]] = 1;
-        }
-    }
-}
-
 function changeGenerationCounter() {
     document.getElementById('generationCounter').innerHTML = 'Generation: ' + generation;
 }
