@@ -18,8 +18,8 @@ function saveCustomTemplate() {
     const structure = {
         name: name,
         str: structureStr,
-        xOffset: floor(boundary.X / 2) - floor(boundary.x / 2),
-        yOffset: floor(boundary.Y / 2) - floor(boundary.y / 2)
+        xOffset: floor(boundary.X / 2) - floor(boundary.x / 2) + 2,
+        yOffset: floor(boundary.Y / 2) - floor(boundary.y / 2) + 1
     };
     const custom = JSON.parse(localStorage.customTemplates);
     custom.push(structure);
@@ -50,7 +50,8 @@ function handleStructureSelector() {
     clearBoard();
     generation = 1;
     changeGenerationCounter();
-    switch (document.getElementById('structure-selector').value) {
+    const value = document.getElementById('structure-selector').value;
+    switch (value) {
         case 'clear': {
             clearBoard();
             break;
@@ -111,7 +112,15 @@ function handleStructureSelector() {
             applyStructureToBoard(wickstretcher, 30, 50);
             break;
         }
-
+        default: {
+            const custom = JSON.parse(localStorage.customTemplates);
+            for (let i = 0; i < custom.length; i++) {
+                if (custom[i].name === value) {
+                    applyStructureToBoard(custom[i].str, custom[i].xOffset, custom[i].yOffset);
+                    break;
+                }
+            }
+        }
     }
 
 }
