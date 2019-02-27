@@ -98,3 +98,8 @@ const wickstretcher = {
         "o3b5o6bo11bo$bboo24boo$5b3obo16bo$6bo3bo14bo$7boo15bobo$8bobbo11boo$9b" +
         "obo12boobo$25boo$27b3o$27boobo$27bo$$23boo4bo$22boob5o$23b6o$24b3o!"
 };
+
+const tagalong = "21bo3b$18b4o3b$13bo2bob2o5b$13bo11b$4o8bo3bob2o5b$o3bo5b2ob2obobob5o$o" +
+    "9b2obobobo2b5o$bo2bo2b2o2bo3b3o2bob2ob$6bo2bob2o12b$6bo4b2o12b$6bo2bob" +
+    "2o12b$bo2bo2b2o2bo3b3o2bob2ob$o9b2obobobo2b5o$o3bo5b2ob2obobob5o$4o8bo" +
+    "3bob2o5b$13bo11b$13bo2bob2o5b$18b4o3b$21bo!";
