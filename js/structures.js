@@ -53,3 +53,48 @@ const blinkerShip = "............*..*...............E" +
     "...........*...*...............E" +
     "...........*...................E" +
     "............*..*...............E";
+
+const boss = "......*..........E" +
+    ".....*.*....E" +
+    ".....*.*....E" +
+    "....**.**...E" +
+    "...*.....*..E" +
+    "..*.*.*.*.*.E" +
+    "..*.*...*.*.E" +
+    ".**.*...*.**E" +
+    ".*..*.*.*..*E" +
+    "...*.....*..E" +
+    "....**.**...E" +
+    ".....*.*....E" +
+    ".....*.*....E" +
+    "......*.....";
+
+const bunnies = ".*.....*.E" +
+    "...*...*.E" +
+    "...*..*.*E" +
+    "..*.*....";
+
+const wickstretcher = {
+    rle: "24b3o$23b6o$22boob5o$23boo4bo$$27bo$27boobo$27b3o$25boo$9bobo12boobo$" +
+        "8bobbo11boo$7boo15bobo$6bo3bo14bo$5b3obo16bo$bboo24boo$bo3b5o6bo11bo$o" +
+        "3bo8b4o7b3o$o5boo5boo8b5obo$3o3b4obo10boob3obboo$bo7boobboo8boo$boo8bo" +
+        "3bo$bobo8b3o$boobbo8b4o8bobo$bbobo13bo5boboo$14b3o6bo$bboo9bo4bo4bo3bo" +
+        "$bbobboo5bo3boo5boobbo$3bo8bo3bo$3bo3bo4bo3boo7bobbo$4bo8bo4bo$5b3o6b" +
+        "3o6b3o$18bo3bobbobo$5b3o4b6o3bo5bo$4bo7bo8bobbobo$3bo3boobo3boo4bobbo$" +
+        "3bobb3obo3bobbobboobo$3b3obobbo3b3o6bo$4boo3boo8boboo11boo$4bo5b10obbo" +
+        "10bobbobbo$3bobbo14bo12bob4o$4bo5b10o3bo7b4o7boo$4boo3boo8bobo9bo3bob" +
+        "oobobbo5bo$3b3obobbo3b3o17booboobooboboobobo$3bobb3obo3bobbobboo3boobo" +
+        "13bobboboobbo$3bo3boobo3boo5bob4obobob5ob3o4bo3boobboo$4bo7bo5bo7bob3o" +
+        "bbobobobob4ob3obboobbo$5b3o4b14obboobbo4bobo4bo4bo3bobo$30bo6boobbo3bo" +
+        "bo3b3oboo$5b3o4b14obboobbo4bobo4bo4bo3bobo$4bo7bo5bo7bob3obbobobobob4o" +
+        "b3obboobbo$3bo3boobo3boo5bob4obobob5ob3o4bo3boobboo$3bobb3obo3bobbobb" +
+        "oo3boobo13bobboboobbo$3b3obobbo3b3o17booboobooboboobobo$4boo3boo8bobo" +
+        "9bo3boboobobbo5bo$4bo5b10o3bo7b4o7boo$3bobbo14bo12bob4o$4bo5b10obbo10b" +
+        "obbobbo$4boo3boo8boboo11boo$3b3obobbo3b3o6bo$3bobb3obo3bobbobboobo$3bo" +
+        "3boobo3boo4bobbo$4bo7bo8bobbobo$5b3o4b6o3bo5bo$18bo3bobbobo$5b3o6b3o6b" +
+        "3o$4bo8bo4bo$3bo3bo4bo3boo7bobbo$3bo8bo3bo$bbobboo5bo3boo5boobbo$bboo" +
+        "9bo4bo4bo3bo$14b3o6bo$bbobo13bo5boboo$boobbo8b4o8bobo$bobo8b3o$boo8bo" +
+        "3bo$bo7boobboo8boo$3o3b4obo10boob3obboo$o5boo5boo8b5obo$o3bo8b4o7b3o$b" +
+        "o3b5o6bo11bo$bboo24boo$5b3obo16bo$6bo3bo14bo$7boo15bobo$8bobbo11boo$9b" +
+        "obo12boobo$25boo$27b3o$27boobo$27bo$$23boo4bo$22boob5o$23b6o$24b3o!"
+};

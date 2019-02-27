@@ -15,6 +15,16 @@
     display: block;
 }
 
+option:checked {
+
+    background: lightgray;
+}
+
+option:disabled {
+    background: rebeccapurple;
+    color: oldlace;
+}
+
 canvas {
     position: absolute;
 }

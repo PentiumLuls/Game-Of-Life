@@ -166,6 +166,7 @@ function generateRandomBoard() {
 function applyStructureToBoard(structure, xOffset, yOffset) {
     let x = Math.floor(cols / 2);
     let y = Math.floor(rows / 2);
+    //STRING READING
     if (typeof structure == 'string') {
         var cellX = 0;
         var cellY = 0;
@@ -182,7 +183,42 @@ function applyStructureToBoard(structure, xOffset, yOffset) {
             else if (cell === '.')
                 grid[x - xOffset + cellX][y - yOffset + cellY] = 0;
         }
-    } else {
+    }
+    //RLE READING
+    else if (typeof structure.rle == 'string') {
+        const columns = structure.rle.split("$");
+        for (var i = 0; i < columns.length; i++) {
+            const column = columns[i];
+            var num = '';
+            var cellY = i;
+            var xcountOffset = 0;
+            for (let j = 0; j < column.length; j++) {
+                const symbol = column[j];
+                try {
+                    if (symbol === 'b') {
+                        if (num === '')
+                            num = '1';
+                        for (let cellX = 0; cellX < num; cellX++) {
+                            grid[x - xOffset + cellX + xcountOffset][y - yOffset + cellY] = 0;
+                        }
+                        xcountOffset += parseInt(num);
+                        num = '';
+                    } else if (symbol === 'o') {
+                        if (num === '')
+                            num = '1';
+                        for (let cellX = 0; cellX < num; cellX++) {
+                            grid[x - xOffset + cellX + xcountOffset][y - yOffset + cellY] = 1;
+                        }
+                        xcountOffset += parseInt(num);
+                        num = '';
+                    } else num += symbol;
+                } catch (e) {
+                }
+            }
+        }
+    }
+    //ARRAY READING
+    else {
         for (let i = 0; i < structure.length; i++) {
             grid[x - xOffset + structure[i][0]][y - yOffset + structure[i][1]] = 1;
         }
@@ -246,6 +282,19 @@ function handleStructureSelector() {
             applyStructureToBoard(blinkerShip, 10, 12);
             break;
         }
+        case 'boss': {
+            applyStructureToBoard(boss, 7, 10);
+            break;
+        }
+        case 'bunnies': {
+            applyStructureToBoard(bunnies, 7, 3);
+            break;
+        }
+        case 'wickstretcher': {
+            applyStructureToBoard(wickstretcher, 30, 50);
+            break;
+        }
+
     }
 
 }
